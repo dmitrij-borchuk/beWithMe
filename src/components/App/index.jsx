@@ -17,9 +17,8 @@ const AppWrapper = styled.div`
   font-family: 'Catamaran', sans-serif;
 `;
 const AppContent = styled.div`
-  padding: 0 9px;
   overflow: auto;
-`
+`;
 
 export default function App() {
   return (
