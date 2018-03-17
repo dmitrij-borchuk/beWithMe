@@ -11,6 +11,26 @@ const Bar = styled.div`
   height: 32px;
   padding: 4px 15px;
 `;
+const PageTitle = styled.div`
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  position: absolute;
+  left: 54px;
+  right: 54px;
+  top: 3px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  text-align: center;
+`;
+const NavLinkStyle = {
+  display: 'block',
+  padding: 9,
+}
+const DrawerStyle = {
+  background: '#fff',
+  paddingTop: 36,
+}
 
 export default function Header(props) {
   const {
@@ -23,28 +43,32 @@ export default function Header(props) {
     <Container>
       <Bar onClick={showDrawer}>
         <Menu />
+        <PageTitle>
+          Page Title
+        </PageTitle>
       </Bar>
       <Drawer
         open={drawerOpened}
-        drawerStyle={{ background: '#fff' }}
+        drawerStyle={DrawerStyle}
         onChange={isOpened => !isOpened && closeDrawer()}
       >
-        <div>
-          <Link
-            to="/profile"
-            onClick={closeDrawer}
-          >
-            Profile
-          </Link>
-        </div>
-        <div>
-          <Link
-            to="/notifications"
-            onClick={closeDrawer}
-          >
-            Notifications
-          </Link>
-        </div>
+        <PageTitle>
+          Be With Me!
+        </PageTitle>
+        <Link
+          to="/notifications"
+          onClick={closeDrawer}
+          style={NavLinkStyle}
+        >
+          Notifications
+        </Link>
+        <Link
+          to="/profile"
+          onClick={closeDrawer}
+          style={NavLinkStyle}
+        >
+          Profile
+        </Link>
       </Drawer>
     </Container>
   );
