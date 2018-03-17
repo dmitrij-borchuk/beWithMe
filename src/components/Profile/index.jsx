@@ -11,8 +11,6 @@ export default function Profile(props) {
     // UpcomingEvents,
   } = props;
 
-  console.log(profile)
-
   return (
 
     <Container>
@@ -48,15 +46,15 @@ Profile.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     gender: PropTypes.string,
-    // birthday: PropTypes.string,
-    // avatar: "http://www.dcc-marketing.com/wp-content/uploads/2015/02/anonyme_18.jpg",
-    // match: PropTypes.shape({
-    //   id: PropTypes.number,
-    //   name: PropTypes.string,
-    //   gender: PropTypes.string,
-    //   birthday: PropTypes.string,
-    //   since: PropTypes.string,
-    // }),
+    birthday: PropTypes.string,
+    avatar: PropTypes.string,
+    match: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      gender: PropTypes.string,
+      birthday: PropTypes.string,
+      since: PropTypes.string,
+    }),
   }),
   // UpcomingEvents: PropTypes.arrayOf(PropTypes.shape({
   // }))
