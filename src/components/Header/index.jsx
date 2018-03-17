@@ -56,7 +56,7 @@ export default function Header(props) {
           Be With Me!
         </PageTitle>
         <Link
-          to="/notifications"
+          to="/notifications/1"
           onClick={closeDrawer}
           style={NavLinkStyle}
         >

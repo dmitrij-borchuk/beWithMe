@@ -10,14 +10,14 @@ export class ProfileContainer extends PureComponent {
       getProfile,
     } = this.props;
 
-    getProfile(parseInt(this.props.match.params.id));
+    getProfile(parseInt(this.props.match.params.id, 10));
   }
 
   componentDidUpdate() {
     const {
       getProfile,
     } = this.props;
-    getProfile(parseInt(this.props.match.params.id));
+    getProfile(parseInt(this.props.match.params.id, 10));
   }
 
   render() {
