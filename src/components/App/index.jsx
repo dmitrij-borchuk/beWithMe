@@ -16,6 +16,10 @@ import icon from '../../Asset 1@2x-8.png';
 const AppWrapper = styled.div`
   font-family: 'Catamaran', sans-serif;
 `;
+const AppContent = styled.div`
+  padding: 0 9px;
+  overflow: auto;
+`
 
 export default function App() {
   return (
@@ -35,8 +39,10 @@ export default function App() {
       <Router>
         <div>
           <Header />
-          <Route path="/notifications" component={Notifications} />
-          <Route path="/profile" component={Profile} />
+          <AppContent>
+            <Route path="/notifications" component={Notifications} />
+            <Route path="/profile" component={Profile} />
+          </AppContent>
         </div>
       </Router>
     </AppWrapper>
