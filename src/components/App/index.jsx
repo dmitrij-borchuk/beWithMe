@@ -1,9 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import Drawer from 'react-motion-drawer';
 import Notifications from '../Notifications/container';
+import Header from '../Header/container';
 import manifest from '../../manifest.webmanifest';
 import icon from '../../Asset 1@2x-8.png';
 
@@ -27,10 +27,8 @@ export default function App() {
       </Helmet>
       <Router>
         <div>
+          <Header />
           <Route path="/notifications" component={Notifications} />
-          <Drawer>
-            <Link to="/notifications">Notifications</Link>
-          </Drawer>
         </div>
       </Router>
     </AppWrapper>
