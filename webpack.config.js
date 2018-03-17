@@ -14,14 +14,17 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json', '.jsx'],
   },
-  // devServer: {
-  //   proxy: {
-  //     "/api": {
-  //       target: "http://localhost:3000",
-  //       pathRewrite: { "^/api": "" }
-  //     }
-  //   }
-  // }
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    // proxy: {
+    //   "/api": {
+    //     target: "http://localhost:3000",
+    //     pathRewrite: { "^/api": "" }
+    //   }
+    // }
+    historyApiFallback: true,
+    port: 8080,
+  },
   module: {
     rules: [
       {

@@ -1,5 +1,6 @@
 import React from 'react';
 // import { Helmet } from 'react-helmet';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Notifications from '../Notifications/container';
 // import appleTouchIcon from '../../assets/favicon/apple-touch-icon.png';
@@ -25,13 +26,12 @@ const AppWrapper = styled.div`
 export default function App() {
   return (
     <AppWrapper>
-      <Notifications />
+      <Router>
+        <div>
+          <Route path="/notifications" component={Notifications} />
+          <Link to="/notifications">Notifications</Link>
+        </div>
+      </Router>
     </AppWrapper>
   );
 }
-
-App.propTypes = {
-};
-
-App.defaultProps = {
-};
