@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Notifications from '../Notifications/container';
 import Profile from '../Profile/container';
@@ -36,8 +36,6 @@ export default function App() {
           <Header />
           <Route path="/notifications" component={Notifications} />
           <Route path="/profile" component={Profile} />
-          <Link to="/notifications">Notifications</Link>
-          <Link to="/profile">Profile</Link>
         </div>
       </Router>
     </AppWrapper>
