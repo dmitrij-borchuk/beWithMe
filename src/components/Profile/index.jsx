@@ -6,6 +6,7 @@ const Container = styled.div`
 `;
 
 export default function Profile(props) {
+
   const {
     id,
     name,
@@ -13,7 +14,6 @@ export default function Profile(props) {
     birthday,
     avatar,
   } = props;
-  console.log(gender);
 
   return (
     <Container>

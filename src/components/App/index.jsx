@@ -41,7 +41,7 @@ export default function App() {
           <Header />
           <AppContent>
             <Route path="/notifications" component={Notifications} />
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile/:id" component={Profile} />
           </AppContent>
         </div>
       </Router>
