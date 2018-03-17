@@ -13,7 +13,6 @@ export default function Profile(props) {
     birthday,
     avatar,
   } = props;
-  console.log(gender);
 
   return (
     <Container>
