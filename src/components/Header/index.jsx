@@ -35,6 +35,12 @@ export default function Header(props) {
         >
           Notifications
         </Link>
+        <Link
+          to="/profile"
+          onClick={closeDrawer}
+        >
+          Profile
+        </Link>
       </Drawer>
     </Container>
   );
