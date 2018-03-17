@@ -63,11 +63,18 @@ export default function Header(props) {
           Notifications
         </Link>
         <Link
-          to="/profile"
+          to="/profile/1"
           onClick={closeDrawer}
           style={NavLinkStyle}
         >
-          Profile
+          My Profile
+        </Link>
+        <Link
+          to="/profile/2"
+          onClick={closeDrawer}
+          style={NavLinkStyle}
+        >
+          Mate Profile
         </Link>
       </Drawer>
     </Container>
