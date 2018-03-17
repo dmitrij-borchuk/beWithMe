@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Notifications from '../Notifications/container';
+import Profile from '../Profile/container';
 // import appleTouchIcon from '../../assets/favicon/apple-touch-icon.png';
 // import favicon32x32 from '../../assets/favicon/favicon-32x32.png';
 // import favicon16x16 from '../../assets/favicon/favicon-16x16.png';
@@ -29,7 +30,9 @@ export default function App() {
       <Router>
         <div>
           <Route path="/notifications" component={Notifications} />
+          <Route path="/profile" component={Profile} />
           <Link to="/notifications">Notifications</Link>
+          <Link to="/profile">Profile</Link>
         </div>
       </Router>
     </AppWrapper>
