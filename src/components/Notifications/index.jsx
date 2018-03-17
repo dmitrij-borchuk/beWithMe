@@ -1,44 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import QuestionOption from '../QuestionOption';
+import NotificationItem from '../NotificationItem';
 
 const Container = styled.div`
 `;
-const QuestionHeader = styled.div`
-`;
 
-export default function Timer(props) {
+export default function Notifications(props) {
   const {
-    text,
-    options,
+    notifications,
+    setNotificationAsDone,
   } = props;
 
   return (
     <Container>
-      <QuestionHeader>
-        {text}
-      </QuestionHeader>
-      {options.map(option => (
-        <QuestionOption
-          url={option.url}
-          text={option.text}
-          key={option.id}
+      {notifications.map(notification => (
+        <NotificationItem
+          date={notification.date}
+          text={notification.text}
+          key={notification.id}
+          onDoneClick={() => setNotificationAsDone(notification.id)}
+          isDone={notification.isDone}
         />
       ))}
     </Container>
   );
 }
 
-Timer.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.shape({
-    url: PropTypes.string,
+Notifications.propTypes = {
+  notifications: PropTypes.arrayOf(PropTypes.shape({
+    date: PropTypes.number,
     text: PropTypes.string,
+    id: PropTypes.number,
   })),
-  text: PropTypes.string,
+  setNotificationAsDone: PropTypes.func,
 };
 
-Timer.defaultProps = {
-  options: [],
-  text: '',
+Notifications.defaultProps = {
+  notifications: [],
+  setNotificationAsDone: () => {},
 };

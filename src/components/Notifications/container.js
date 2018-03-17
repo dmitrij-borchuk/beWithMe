@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import component from './index';
 
-const mapStateToProps = ({ questions }) => ({
-  text: questions.list[0].text,
-  options: questions.list[0].options,
+const mapStateToProps = ({ notifications }) => ({
+  notifications: notifications.list,
 });
 
 export default connect(

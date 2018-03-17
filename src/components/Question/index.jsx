@@ -8,7 +8,7 @@ const Container = styled.div`
 const QuestionHeader = styled.div`
 `;
 
-export default function Timer(props) {
+export default function Question(props) {
   const {
     text,
     options,
@@ -30,7 +30,7 @@ export default function Timer(props) {
   );
 }
 
-Timer.propTypes = {
+Question.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     url: PropTypes.string,
     text: PropTypes.string,
@@ -38,7 +38,7 @@ Timer.propTypes = {
   text: PropTypes.string,
 };
 
-Timer.defaultProps = {
+Question.defaultProps = {
   options: [],
   text: '',
 };
