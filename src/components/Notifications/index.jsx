@@ -52,7 +52,7 @@ export default function Notifications(props) {
 
 Notifications.propTypes = {
   notifications: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.number,
+    date: PropTypes.string,
     text: PropTypes.string,
     id: PropTypes.number,
   })),
