@@ -3,9 +3,11 @@ import { SET_QUESTIONS_LIST } from '../actions/questions';
 const defaultState = {
   list: [{
     date: Date.now(),
-    text: 'It’s been a long time since you and [Alice] shared [a gentle dance to your favorite song]',
+    text: 'It’s time to take Alice some Italian cousine',
     id: 1,
     isDone: false,
+    url: 'http://via.placeholder.com/150x150',
+    type: 'Notifier',
   }, {
     date: Date.now() + 864000000,
     text: 'Some notification',

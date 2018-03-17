@@ -8,6 +8,7 @@ import manifest from '../../manifest.webmanifest';
 import icon from '../../Asset 1@2x-8.png';
 
 const AppWrapper = styled.div`
+  font-family: 'Catamaran', sans-serif;
 `;
 
 export default function App() {
