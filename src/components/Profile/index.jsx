@@ -7,10 +7,11 @@ const Container = styled.div`
 
 export default function Profile(props) {
   const {
-    Profile,
     profile,
     // UpcomingEvents,
   } = props;
+
+  console.log(profile)
 
   return (
 
@@ -19,22 +20,22 @@ export default function Profile(props) {
       <dl>
 
         <dt>Profile</dt>
-        <dd>{profile}</dd>
+        <dd>{JSON.stringify(profile)}</dd>
 
         <dt>Id</dt>
-        <dd>{Profile.id}</dd>
+        <dd>{profile.id}</dd>
 
         <dt>Name</dt>
-        <dd>{Profile.name}</dd>
+        <dd>{profile.name}</dd>
 
         <dt>Gender</dt>
-        <dd>{Profile.gender}</dd>
+        <dd>{profile.gender}</dd>
 
         <dt>Birthday</dt>
-        <dd>{Profile.birthday}</dd>
+        <dd>{profile.birthday}</dd>
 
         <dt>avatar</dt>
-        <dd>{Profile.avatar}</dd>
+        <dd>{profile.avatar}</dd>
       </dl>
 
     </Container>
@@ -43,7 +44,7 @@ export default function Profile(props) {
 }
 
 Profile.propTypes = {
-  Profile: PropTypes.shape({
+  profile: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     gender: PropTypes.string,
@@ -62,6 +63,6 @@ Profile.propTypes = {
 };
 
 Profile.defaultProps = {
-  Profile: {},
+  profile: {},
   // UpcomingEvents: [],
 };
