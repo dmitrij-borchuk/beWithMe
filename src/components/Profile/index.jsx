@@ -7,33 +7,34 @@ const Container = styled.div`
 
 export default function Profile(props) {
   const {
-    profile,
-    // UpcomingEvents,
+    id,
+    name,
+    gender,
+    birthday,
+    avatar,
   } = props;
+  console.log(gender);
 
   return (
-
     <Container>
-      
       <dl>
 
         <dt>Profile</dt>
-        <dd>{JSON.stringify(profile)}</dd>
 
         <dt>Id</dt>
-        <dd>{profile.id}</dd>
+        <dd>{id}</dd>
 
         <dt>Name</dt>
-        <dd>{profile.name}</dd>
+        <dd>{name}</dd>
 
         <dt>Gender</dt>
-        <dd>{profile.gender}</dd>
+        <dd>{gender}</dd>
 
         <dt>Birthday</dt>
-        <dd>{profile.birthday}</dd>
+        <dd>{birthday}</dd>
 
         <dt>avatar</dt>
-        <dd>{profile.avatar}</dd>
+        <dd>{avatar}</dd>
       </dl>
 
     </Container>
@@ -42,25 +43,24 @@ export default function Profile(props) {
 }
 
 Profile.propTypes = {
-  profile: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    gender: PropTypes.string,
-    birthday: PropTypes.string,
-    avatar: PropTypes.string,
-    match: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      gender: PropTypes.string,
-      birthday: PropTypes.string,
-      since: PropTypes.string,
-    }),
-  }),
-  // UpcomingEvents: PropTypes.arrayOf(PropTypes.shape({
-  // }))
+  id: PropTypes.number,
+  name: PropTypes.string,
+  gender: PropTypes.string,
+  birthday: PropTypes.string,
+  avatar: PropTypes.string,
+  // match: PropTypes.shape({
+  //   id: PropTypes.number,
+  //   name: PropTypes.string,
+  //   gender: PropTypes.string,
+  //   birthday: PropTypes.string,
+  //   since: PropTypes.string,
+  // }),
 };
 
 Profile.defaultProps = {
-  profile: {},
-  // UpcomingEvents: [],
+  id: null,
+  name: null,
+  gender: null,
+  birthday: null,
+  avatar: null,
 };
