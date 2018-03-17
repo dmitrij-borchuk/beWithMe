@@ -3,7 +3,7 @@ import { SET_QUESTIONS_LIST } from '../actions/questions';
 const defaultState = {
   list: [{
     date: Date.now(),
-    text: 'Some very long option text. Some very long option text. Some very long option text. Some very long option text. Some very long option text. ',
+    text: 'It’s been a long time since you and [Alice] shared [a gentle dance to your favorite song]',
     id: 1,
     isDone: false,
   }, {
@@ -11,6 +11,11 @@ const defaultState = {
     text: 'Some notification',
     id: 2,
     isDone: true,
+  }, {
+    date: Date.now() + (864000000 * 2),
+    text: 'Some notification',
+    id: 3,
+    isDone: false,
   }],
 };
 

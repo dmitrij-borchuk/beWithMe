@@ -2,18 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+function getMonthString(date) {
+  return date.toUTCString().split(' ')[2];
+}
+
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
+  height: 50px;
+  overflow: hidden;
 `;
 const DateContainer = styled.div`
-  display: inline-block;
+  width: 50px;
+  box-sizing: border-box;
   border-left: 3px solid black;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 `;
 const Text = styled.div`
-  display: inline-block;
+  width: 100%;
 `;
 const DoneBtn = styled.button`
-  display: inline-block;
+`;
+const Month = styled.div`
+  text-align: center;
+`;
+const Day = styled.div`
+  text-align: center;
+  font-size: 24px;
 `;
 
 export default function NotificationItem(props) {
@@ -24,13 +42,18 @@ export default function NotificationItem(props) {
     isDone,
   } = props;
   const d = new Date(date);
-  const day = d.getDay();
-  const localizedDate = (new Date(date)).toLocaleDateString();
+  const day = d.getDate();
+  const month = getMonthString(d);
 
   return (
     <Container>
       <DateContainer>
-        {day}
+        <Month>
+          {month}
+        </Month>
+        <Day>
+          {day}
+        </Day>
       </DateContainer>
       <Text>
         {text}
