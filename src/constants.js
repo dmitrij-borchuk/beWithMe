@@ -1,4 +1,2 @@
-export const SECONDS_IN_SESSION = 1500;
-export default {
-  SECONDS_IN_SESSION,
-};
+/* eslint-disable-next-line import/prefer-default-export */
+export const basePath = 'http://188.166.69.118:8000';

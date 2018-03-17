@@ -29,18 +29,22 @@ export default function Header(props) {
         drawerStyle={{ background: '#fff' }}
         onChange={isOpened => !isOpened && closeDrawer()}
       >
-        <Link
-          to="/notifications"
-          onClick={closeDrawer}
-        >
-          Notifications
-        </Link>
-        <Link
-          to="/profile"
-          onClick={closeDrawer}
-        >
-          Profile
-        </Link>
+        <div>
+          <Link
+            to="/profile"
+            onClick={closeDrawer}
+          >
+            Profile
+          </Link>
+        </div>
+        <div>
+          <Link
+            to="/notifications"
+            onClick={closeDrawer}
+          >
+            Notifications
+          </Link>
+        </div>
       </Drawer>
     </Container>
   );
