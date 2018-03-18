@@ -47,6 +47,7 @@ export default function Interests(props) {
   const {
     items,
   } = props;
+  console.log(items);
 
   return (
     <Container>

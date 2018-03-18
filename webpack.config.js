@@ -11,7 +11,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new CopyWebpackPlugin([
-      { from: 'src/Logo flower_1-8.png', to: '' },
+      { from: 'src/Logo Flower1.png', to: '' },
     ]),
   ],
   devtool: 'source-map',

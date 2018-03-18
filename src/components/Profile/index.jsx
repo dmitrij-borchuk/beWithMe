@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { MonthView } from 'react-calendar';
 import NotificationItem from '../NotificationItem';
 import Heart from '../Icon/heart';
+import PeriodItem from '../PeriodItem';
 
 const Container = styled.div`
 `;
@@ -272,6 +273,7 @@ export default class Profile extends PureComponent {
     super();
     this.state = {
       activeTab: 'ME',
+      bottomTab: 'NOTIFICATION',
       currentQuestionIndex: 0,
       openedCalendarIndex: null,
     };
@@ -289,6 +291,12 @@ export default class Profile extends PureComponent {
   setTab(tab) {
     this.setState({
       activeTab: tab,
+    });
+  }
+
+  setBottomTab(tab) {
+    this.setState({
+      bottomTab: tab,
     });
   }
 
@@ -339,6 +347,7 @@ export default class Profile extends PureComponent {
     const {
       activeTab,
       openedCalendarIndex,
+      bottomTab,
     } = this.state;
     const mateNamesMap = {
       1: 'Bob',
@@ -585,20 +594,29 @@ export default class Profile extends PureComponent {
               marginBottom: '1em',
             }}
           >
-            <InnerNavigationItem style={cssInnerNavigationItem}>
+            <InnerNavigationItem
+              style={bottomTab === 'NOTIFICATION' ? cssInnerNavigationItem : {}}
+              onClick={() => this.setBottomTab('NOTIFICATION')}
+            >
               Events
             </InnerNavigationItem>
-            <InnerNavigationItem>
+            <InnerNavigationItem
+              style={bottomTab === 'PERIOD' ? cssInnerNavigationItem : {}}
+              onClick={() => this.setBottomTab('PERIOD')}
+            >
               My Period
               <ButtonIcon>
                 <Heart />
               </ButtonIcon>
             </InnerNavigationItem>
           </InnerNavigation>
-
-          {renderNotifications({ id })}
+          {bottomTab === 'PERIOD' && (
+            <PeriodItem />
+          )}
+          {bottomTab === 'NOTIFICATION' && (
+            renderNotifications({ id })
+          )}
         </SectionBlock>
-
       </Container>
     );
   }

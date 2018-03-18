@@ -124,6 +124,11 @@ const DoneButton = styled.button`
   `}
 `;
 
+function getDaysLeft(date1, date2) {
+  const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+  return Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+}
+
 export default class NotificationItem extends PureComponent {
   constructor() {
     super();
@@ -238,7 +243,7 @@ export default class NotificationItem extends PureComponent {
     const year = d.getFullYear();
     const month = getMonthString(d);
 
-    const description = "N days left";
+    const description = `${getDaysLeft(d, new Date())} days left`;
 
     const opts = {
       date,

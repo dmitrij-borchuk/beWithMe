@@ -2,10 +2,10 @@
     "name": "Be With Me",
     "icons": [
         {
-            "src": "Logo flower_1-8.png",
-            "sizes": "591x499",
+            "src": "Logo Flower1.png",
+            "sizes": "180x180",
             "type": "image/png",
-            "density": 4.0
+            "density": 3
         }
     ],
     "start_url": "index.html",

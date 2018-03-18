@@ -23,14 +23,18 @@ const PageTitle = styled.div`
   padding-top: 6px;
   padding-bottom: 6px;
   text-align: center;
+  color: #fff;
 `;
 const NavLinkStyle = {
   display: 'block',
   padding: 9,
+  fontSize: '17px',
+  color: '#fff',
+  marginBottom: '21px',
 };
 const DrawerStyle = {
-  background: '#fff',
   paddingTop: 36,
+  background: 'linear-gradient(to bottom, rgb(48, 35, 174), rgb(200, 109, 215))',
 };
 
 export default function Header(props) {
