@@ -61,28 +61,28 @@ export default function Header(props) {
           onClick={closeDrawer}
           style={NavLinkStyle}
         >
-          My Profile
+          Alice`s profile
         </Link>
         <Link
           to="/profile/2"
           onClick={closeDrawer}
           style={NavLinkStyle}
         >
-          Mate Profile
+          Bob`s profile
         </Link>
         <Link
           to="/notifications/2"
           onClick={closeDrawer}
           style={NavLinkStyle}
         >
-          Notifications
+          Bob`s notifications
         </Link>
         <Link
           to="/interests/1"
           onClick={closeDrawer}
           style={NavLinkStyle}
         >
-          Interests
+          Alice`s interests
         </Link>
       </Drawer>
     </Container>

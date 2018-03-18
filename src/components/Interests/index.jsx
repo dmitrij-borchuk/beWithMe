@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Item from './Item';
 import HeroWithText from '../HeroWithText';
+import PrimaryButton from '../PrimaryButton';
 import giftImage from '../../assets/gift@3x.png';
 
 const Container = styled.div`
@@ -21,6 +22,10 @@ const GiftImage = styled.img`
 const CategoryText = styled.span`
   font-weight: bold;
   margin-left: 11px;
+`;
+const ButtonContainer = styled.div`
+  margin: auto;
+  width: 240px;
 `;
 
 function getItems(questions) {
@@ -55,6 +60,11 @@ export default function Interests(props) {
           />
         </ItemWrapper>
       ))}
+      <ButtonContainer>
+        <PrimaryButton>
+          More
+        </PrimaryButton>
+      </ButtonContainer>
     </Container>
   );
 }
