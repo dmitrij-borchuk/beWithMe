@@ -50,33 +50,20 @@ const Control = styled.div`
 `;
 
 export default class NotificationItem extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      opened: false,
-    };
-  }
-
   render() {
     const {
       text,
       url,
     } = this.props;
-    const {
-      opened,
-    } = this.state;
 
     return (
       <Container>
-        {!!url && (
-          <ImageWrapper>
-            <Image src={url} />
-          </ImageWrapper>
-        )}
-        <ContentWrapper
-          onClick={() => this.onItemClick()}
-          opened={opened}
-        >
+        <ContentWrapper>
+          {!!url && (
+            <ImageWrapper>
+              <Image src={url} />
+            </ImageWrapper>
+          )}
           <TextWrapper>
             <Text>
               {text}

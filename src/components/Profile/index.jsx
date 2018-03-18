@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { MonthView } from 'react-calendar';
 import NotificationItem from '../NotificationItem';
+import Heart from '../Icon/heart';
 
 const Container = styled.div`
 `;
@@ -105,7 +106,11 @@ const OptionLabel = styled.div`
   margin-top: 2px;
 `;
 const NextQuestion = styled.button`
-  background-color: rgb(28, 63, 144);
+  ${props => (props.id === 2 ? css`
+    background: rgb(28, 63, 144);
+  ` : css`
+    background: linear-gradient(to right, rgb(48, 35, 174), rgb(200, 109, 215));
+  `)}
   color: white;
   border: none;
   padding: 13px;
@@ -167,6 +172,9 @@ const Accordion = styled.div`
     height: 0;
   `}
   overflow: hidden;
+`;
+const ButtonIcon = styled.span`
+  margin-left: 5px;
 `;
 
 const defaultFemaleAvatarUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/34DB5D2E-467B-46AA-A280-5E5182618631.png";
@@ -317,7 +325,6 @@ export default class Profile extends PureComponent {
     this.setState({
       openedCalendarIndex: index,
     });
-
   }
 
   render() {
@@ -430,14 +437,14 @@ export default class Profile extends PureComponent {
                 </h4>
 
                 <Question>
-                  {currentQuestion.options.map(option => (
+                  {Object.keys(currentQuestion.options).map(optionKey => (
                     <QuestionOption
-                      key={option}
-                      onClick={() => this.sendAnswer(option)}
+                      key={optionKey}
+                      onClick={() => this.sendAnswer(optionKey)}
                     >
-                      <img src={foodImageUrl} alt=""/>
+                      <img src={currentQuestion.options[optionKey]} alt="" />
                       <OptionLabel>
-                        {option}
+                        {optionKey}
                       </OptionLabel>
                     </QuestionOption>
                   ))}
@@ -573,14 +580,19 @@ export default class Profile extends PureComponent {
         </SectionBlock>
 
         <SectionBlock>
-          <InnerNavigation style={{
-            marginBottom: '1em',
-          }}>
+          <InnerNavigation
+            style={{
+              marginBottom: '1em',
+            }}
+          >
             <InnerNavigationItem style={cssInnerNavigationItem}>
               Events
             </InnerNavigationItem>
             <InnerNavigationItem>
               My Period
+              <ButtonIcon>
+                <Heart />
+              </ButtonIcon>
             </InnerNavigationItem>
           </InnerNavigation>
 

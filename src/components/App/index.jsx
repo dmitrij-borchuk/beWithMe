@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import Notifications from '../Notifications/container';
 import Profile from '../Profile/container';
@@ -12,7 +12,7 @@ import Profile from '../Profile/container';
 import Header from '../Header/container';
 import Interests from '../Interests/container';
 import manifest from '../../manifest.webmanifest';
-import icon from '../../Asset 1@2x-8.png';
+import icon from '../../Logo flower_1-8.png';
 
 const AppWrapper = styled.div`
   font-family: 'Catamaran', sans-serif;
@@ -43,6 +43,7 @@ export default function App() {
             <Route path="/notifications/:id" component={Notifications} />
             <Route path="/profile/:id" component={Profile} />
             <Route path="/interests/:id" component={Interests} />
+            <Redirect from="/" to="/profile/1" />
           </AppContent>
         </div>
       </Router>

@@ -33,8 +33,11 @@ function getItems(questions) {
   const items = [];
 
   questions.forEach(
-    question => question.answers.forEach(
-      answer => items.push(answer),
+    question => Object.keys(question.answers).forEach(
+      key => items.push({
+        text: key,
+        url: question.answers[key],
+      }),
     ),
   );
   return items;
@@ -55,9 +58,10 @@ export default function Interests(props) {
         </CategoryText>
       </Category>
       {getItems(items).map(item => (
-        <ItemWrapper key={item.id}>
+        <ItemWrapper key={item.text}>
           <Item
-            text={item}
+            text={item.text}
+            url={item.url}
           />
         </ItemWrapper>
       ))}

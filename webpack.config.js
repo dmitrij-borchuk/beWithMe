@@ -11,7 +11,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new CopyWebpackPlugin([
-      { from: 'src/Asset 1@2x-8.png', to: '' },
+      { from: 'src/Logo flower_1-8.png', to: '' },
     ]),
   ],
   devtool: 'source-map',
@@ -22,6 +22,9 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     proxy: {
       '/api': {
+        target: 'http://188.166.69.118:8000',
+      },
+      '/static': {
         target: 'http://188.166.69.118:8000',
       },
     },
