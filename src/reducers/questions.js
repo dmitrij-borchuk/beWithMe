@@ -1,14 +1,28 @@
-import { SET_QUESTIONS_LIST } from '../actions/questions';
+import {
+  SET_QUESTIONS_LIST,
+  SET_PARTNERS_LIKES_LIST,
+} from '../actions/questions';
+
+function parseData(data) {
+  return {
+    text: data.question_text,
+    id: data.question_id,
+    options: data.f_options_list,
+  };
+}
+function parseLikes(data) {
+  return {
+    favoriteItemId: data.favoriteitem_id,
+    howOften: data.how_often,
+    lastDate: data.last_date,
+    lastQuestion: data.last_question,
+    reminder: data.reminder,
+  };
+}
 
 const defaultState = {
-  list: [{
-    text: 'Some very long question? Some very long question? Some very long question? Some very long question? Some very long question? Some very long question? Some very long question? Some very long question?',
-    options: [{
-      text: 'Some very long option text. Some very long option text. Some very long option text. Some very long option text. Some very long option text. ',
-      url: 'http://via.placeholder.com/150x150',
-      id: 1,
-    }],
-  }],
+  list: [],
+  partnersLikes: [],
 };
 
 export default function (state = defaultState, action) {
@@ -16,7 +30,12 @@ export default function (state = defaultState, action) {
     case SET_QUESTIONS_LIST:
       return {
         ...state,
-        list: action.payload,
+        list: action.payload.map(parseData),
+      };
+    case SET_PARTNERS_LIKES_LIST:
+      return {
+        ...state,
+        partnersLikes: action.payload.map(parseLikes),
       };
     default:
       return state;

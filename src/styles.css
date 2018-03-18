@@ -2,10 +2,6 @@
   height: 100%;
 }
 
-#root {
-  background: rgb(250, 250, 250);
-}
-
 .calendar-common-tile {
   border: none;
   color: rgb(28,63,144);

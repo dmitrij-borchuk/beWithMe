@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { MonthView } from 'react-calendar';
 import NotificationItem from '../NotificationItem';
 
@@ -163,24 +162,39 @@ const foodImageUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/F561
 const calendarIconUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/82F4D0F2-F371-4826-AFA6-311BEC84CC76.png";
 
 const currentDate = new Date();
+const oneDayInMs = 86400000;
 
 const NotificationWrapper = styled.div``;
 const notifications = [
   {
     id: 1,
-    date: (new Date()).toString(),
-    text: "Mother's birthday",
-    type: "Type?",
+    date: (currentDate).toString(),
+    text: 'Mother\'s birthday',
+    type: 'Type?',
     isDone: false,
   },
   {
     id: 2,
-    date: (new Date()).toString(),
-    text: "2 Years Anniversary",
-    type: "Type?",
+    date: (new Date(Date.now() + (8 * oneDayInMs))).toString(),
+    text: '2 Years Anniversary',
+    type: 'Type?',
     isDone: false,
-  }
-]
+  },
+  {
+    id: 3,
+    date: (new Date(Date.now() + (16 * oneDayInMs))).toString(),
+    text: 'Mother\'s birthday',
+    type: 'Type?',
+    isDone: false,
+  },
+  {
+    id: 4,
+    date: (new Date(Date.now() + (8 * oneDayInMs))).toString(),
+    text: '2 Years Anniversary',
+    type: 'Type?',
+    isDone: false,
+  },
+];
 
 function getImgUrl(gender) {
   return gender === "male" ? defaultMaleAvatarUrl : defaultFemaleAvatarUrl
@@ -190,14 +204,18 @@ function getMateImgUrl(gender) {
   return gender === "male" ? defaultFemaleAvatarUrl : defaultMaleAvatarUrl
 }
 
-function renderNotifications({compact} = {}) {
+function renderNotifications({ compact, id } = {}) {
+  const currentNotification = notifications.slice((id - 1) * 2, ((id - 1) * 2) + 2);
   return (
     <div>
-      {notifications.map(notification => (
-        <NotificationWrapper key={notification.id} style={{
-          marginLeft: compact ? 33 : 0,
-          marginBottom: compact ? 0 : 10,
-        }}>
+      {currentNotification.map(notification => (
+        <NotificationWrapper
+          key={notification.id}
+          style={{
+            marginLeft: compact ? 33 : 0,
+            marginBottom: compact ? 0 : 10,
+          }}
+        >
           <NotificationItem
             date={notification.date}
             text={notification.text}
@@ -227,314 +245,306 @@ function selectedDate(date, view) {
   console.log(date)
 }
 
-export default function Profile(props) {
+export default class Profile extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      activeTab: 'ME',
+      currentQuestionIndex: 0,
+    };
+  }
 
-  const {
-    id,
-    name,
-    gender,
-    birthday,
-    avatar,
-  } = props;
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.setState({
+        activeTab: 'ME',
+        currentQuestionIndex: 0,
+      });
+    }
+  }
 
-  return (
-    <Container>
+  setTab(tab) {
+    this.setState({
+      activeTab: tab,
+    });
+  }
 
-      <Section>
+  getQuestion() {
+    const {
+      questions,
+    } = this.props;
+    const {
+      currentQuestionIndex,
+    } = this.state;
 
-        <LeftSide>
+    return questions[currentQuestionIndex];
+  }
 
-          <Avatar>
-            <img src={getImgUrl(gender)} style={{ width: 107 }}/>
-          </Avatar>
+  async sendAnswer(answer) {
+    const {
+      questions,
+      setAnswer,
+      id,
+    } = this.props;
+    const {
+      currentQuestionIndex,
+    } = this.state;
+    const question = questions[currentQuestionIndex];
+    question.answers = [answer];
 
-          <BigSpot></BigSpot>
+    await setAnswer(id, question);
+    this.setState({
+      currentQuestionIndex: currentQuestionIndex + 1,
+    });
+  }
 
-        </LeftSide>
+  render() {
+    const {
+      id,
+      name,
+      gender,
+      birthday,
+      avatar,
+      partnersLikes,
+    } = this.props;
+    const {
+      activeTab,
+    } = this.state;
+    const mateNamesMap = {
+      1: 'Bob',
+      2: 'Alice',
+    };
+    const currentQuestion = this.getQuestion();
 
-        <RightSide>
+    return (
+      <Container>
 
-          <Status>
-            <div style={{
-              textAlign: 'center',
-              paddingTop: 18,
-              color: '#1c3f90',
-            }}>
-              since 10/02/2018
-            </div>
-            <div style={{
-              textAlign: 'center',
-              fontSize: 25,
-              color: '#1c3f90',
-            }}>
-              1 Year 200 Days Together
-            </div>
-          </Status>
+        <Section>
 
-          <SmallSpot></SmallSpot>
+          <LeftSide>
 
-        </RightSide>
+            <Avatar>
+              <img src={getImgUrl(gender)} style={{ width: 107 }}/>
+            </Avatar>
 
-      </Section>
-      
-      <Section>
+            <BigSpot></BigSpot>
 
-        <LeftSide style={{ zIndex: 1 }}>
-          <Name>
-            Alice Cooper
-          </Name>
-          <Avatar>
-            <img src={getMateImgUrl(gender)} style={{ width: 107 / 2 }}/>
-          </Avatar>
-        </LeftSide>
+          </LeftSide>
 
-        <RightSide style={{
-          marginTop: -7,
-        }}>
-          {renderNotifications({compact: true})}
-        </RightSide>
+          <RightSide>
 
-      </Section>
+            <Status>
+              <div style={{
+                textAlign: 'center',
+                paddingTop: 18,
+                color: '#1c3f90',
+              }}>
+                since 10/02/2018
+              </div>
+              <div style={{
+                textAlign: 'center',
+                fontSize: 25,
+                color: '#1c3f90',
+              }}>
+                1 Year 200 Days Together
+              </div>
+            </Status>
 
-      {/* STUFF FOR MY MATE */}
+            <SmallSpot></SmallSpot>
 
-      <SectionBlock>
+          </RightSide>
+
+        </Section>
+
+        <Section>
+
+          <LeftSide style={{ zIndex: 1 }}>
+            <Name>
+              {name}
+            </Name>
+            <Avatar>
+              <img src={getMateImgUrl(gender)} style={{ width: 107 / 2 }}/>
+            </Avatar>
+          </LeftSide>
+
+          <RightSide style={{
+            marginTop: -7,
+          }}>
+            {renderNotifications({ compact: true, id })}
+          </RightSide>
+
+        </Section>
+
         <InnerNavigation>
-          <InnerNavigationItem>
+          <InnerNavigationItem
+            style={activeTab === 'ME' ? cssInnerNavigationItem : {}}
+            onClick={() => this.setTab('ME')}
+          >
             Me
           </InnerNavigationItem>
-          <InnerNavigationItem style={cssInnerNavigationItem}>
-            Alice
+          <InnerNavigationItem
+            style={activeTab === 'MATE' ? cssInnerNavigationItem : {}}
+            onClick={() => this.setTab('MATE')}
+          >
+            {mateNamesMap[id]}
           </InnerNavigationItem>
         </InnerNavigation>
 
-        <Favorites>
-          <Favorite>
-            <Section style={{ marginTop: 20 }}>
-              <FavoriteTitle>
-                Favorite cousine is:
-              </FavoriteTitle>
-              <Question style={{
-                order: 1,
-                marginBottom: 0,
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}>
-                <QuestionOption>
-                  <img src={foodImageUrl} alt=""/>
-                  <OptionLabel>
-                    Italian
-                  </OptionLabel>
-                </QuestionOption>
-                <QuestionOption>
-                  <img src={foodImageUrl} alt=""/>
-                  <OptionLabel>
-                    Chinese
-                  </OptionLabel>
-                </QuestionOption>
-              </Question>
-            </Section>
-            <FavoriteLastTime>
-              <FavoriteLastTimeHint>
-                <span style={{
-                  flexDirection: 'column',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexGrow: 1,
-                }}>
-                  When did you last take Alice to eat some italian cuisine?
-                </span>
-                <img src={calendarIconUrl} alt="" style={{
-                  order: 1,
-                }}/>
-              </FavoriteLastTimeHint>
-              <FavoriteLastTimeAnswer>
-                <span style={{
-                  flexDirection: 'column',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexGrow: 1,
-                }}>
-                  How often you usually do this?
-                </span>
-                <select style={{
-                  order: 1,
-                }}>
-                  <option value="weekly">Every week</option>
-                </select>
-              </FavoriteLastTimeAnswer>
-            </FavoriteLastTime>
-          </Favorite>
+        {/* MY STUFF */}
+        {activeTab === 'ME' && (
+          <div>
+            {!!currentQuestion && (
+              <SectionBlock>
+                <h4
+                  style={{
+                    padding: '0 16px',
+                    margin: '21px 0 17px 0',
+                  }}
+                >
+                  {currentQuestion.text}
+                </h4>
 
-          <Favorite>
-            <Section style={{ marginTop: 20 }}>
-              <FavoriteTitle>
-                Favorite cousine is:
-              </FavoriteTitle>
-              <Question style={{
-                order: 1,
-                marginBottom: 0,
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}>
-                <QuestionOption>
-                  <img src={foodImageUrl} alt=""/>
-                  <OptionLabel>
-                    Italian
-                  </OptionLabel>
-                </QuestionOption>
-                <QuestionOption>
-                  <img src={foodImageUrl} alt=""/>
-                  <OptionLabel>
-                    Chinese
-                  </OptionLabel>
-                </QuestionOption>
-              </Question>
-            </Section>
-            <FavoriteLastTime>
-              <FavoriteLastTimeHint>
-                <span style={{
-                  flexDirection: 'column',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexGrow: 1,
-                }}>
-                  When did you last take Alice to eat some italian cuisine?
-                </span>
-                <img src={calendarIconUrl} alt="" style={{
-                  order: 1,
-                }}/>
-              </FavoriteLastTimeHint>
-              <FavoriteLastTimeAnswer>
-                <span style={{
-                  flexDirection: 'column',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexGrow: 1,
-                }}>
-                  How often you usually do this?
-                </span>
-                <select style={{
-                  order: 1,
-                }}>
-                  <option value="weekly">Every week</option>
-                </select>
-              </FavoriteLastTimeAnswer>
-            </FavoriteLastTime>
-          </Favorite>
+                <Question>
+                  {currentQuestion.options.map(option => (
+                    <QuestionOption
+                      key={option}
+                      onClick={() => this.sendAnswer(option)}
+                    >
+                      <img src={foodImageUrl} alt=""/>
+                      <OptionLabel>
+                        {option}
+                      </OptionLabel>
+                    </QuestionOption>
+                  ))}
+                </Question>
 
-        </Favorites>
+                <NextQuestion>Next</NextQuestion>
+              </SectionBlock>
 
-      </SectionBlock>
+            )}
+          </div>
+        )}
 
-      {/* MY STUFF */}
+        {/* STUFF FOR MY MATE */}
+        {activeTab === 'MATE' &&
+          <SectionBlock>
+            <Favorites>
+              {partnersLikes.map(like => (
+                <Favorite key={like.favoriteItemId}>
+                  {/* <Section style={{ marginTop: 20 }}>
+                    <FavoriteTitle>
+                      Favorite cousine is:
+                    </FavoriteTitle>
+                    <Question
+                      style={{
+                        order: 1,
+                        marginBottom: 0,
+                        justifyContent: 'center',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <QuestionOption>
+                        <img src={foodImageUrl} alt=""/>
+                        <OptionLabel>
+                          Italian
+                        </OptionLabel>
+                      </QuestionOption>
+                      <QuestionOption>
+                        <img src={foodImageUrl} alt=""/>
+                        <OptionLabel>
+                          Chinese
+                        </OptionLabel>
+                      </QuestionOption>
+                    </Question>
+                  </Section> */}
+                  <FavoriteLastTime>
+                    <FavoriteLastTimeHint>
+                      <span
+                        style={{
+                          flexDirection: 'column',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          flexGrow: 1,
+                        }}
+                      >
+                        {like.lastQuestion}
+                      </span>
+                      <img src={calendarIconUrl} alt="" style={{
+                        order: 1,
+                      }}/>
+                    </FavoriteLastTimeHint>
+                    <FavoriteLastTimeAnswer>
+                      <span style={{
+                        flexDirection: 'column',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexGrow: 1,
+                      }}>
+                        How often you usually do this?
+                      </span>
+                      <select style={{
+                        order: 1,
+                      }}>
+                        <option value="weekly">Every week</option>
+                      </select>
+                    </FavoriteLastTimeAnswer>
+                  </FavoriteLastTime>
+                </Favorite>
+              ))}
+            </Favorites>
+          </SectionBlock>
+        }
 
-      <Section>
-        <InnerNavigation>
-          <InnerNavigationItem style={cssInnerNavigationItem}>
-            Me
-          </InnerNavigationItem>
-          <InnerNavigationItem>
-            Alice
-          </InnerNavigationItem>
-        </InnerNavigation>
-      </Section>
+        <SectionBlock>
+          <h3 style={{
+            marginTop: 37,
+            borderTop: '1px solid rgb(28,63,144)',
+            paddingTop: 25,
+            textAlign: 'center',
+            color: 'rgb(28,63,144)',
+            fontSize: 24,
+          }}>My Calendar</h3>
 
-      <SectionBlock>
-        <h4 style={{
-          padding: '0 16px',
-          margin: '21px 0 17px 0',
-        }}>
-          What is your fav cousine?
-        </h4>
+          <Months>
+            <Month>February</Month>
+            <CurrentMonth>March</CurrentMonth>
+            <Month>April</Month>
+          </Months>
 
-        <Question>
-          <QuestionOption>
-            <img src={foodImageUrl} alt=""/>
-            <OptionLabel>
-              Italian
-            </OptionLabel>
-          </QuestionOption>
-          <QuestionOption>
-            <img src={foodImageUrl} alt=""/>
-            <OptionLabel>
-              Chinese
-            </OptionLabel>
-          </QuestionOption>
-          <QuestionOption>
-            <img src={foodImageUrl} alt=""/>
-            <OptionLabel>
-              French
-            </OptionLabel>
-          </QuestionOption>
-          <QuestionOption>
-            <img src={foodImageUrl} alt=""/>
-            <OptionLabel>
-              Greek
-            </OptionLabel>
-          </QuestionOption>
-          <QuestionOption>
-            <img src={foodImageUrl} alt=""/>
-            <OptionLabel>
-              Indonesian
-            </OptionLabel>
-          </QuestionOption>
-        </Question>
+          <div style={{
+            margin: '31px auto',
+            width: 370,
+          }}>
+            <MonthView
+              locale="en-US"
+              calendarType="ISO 8601"
+              showNeighboringMonth={false}
+              activeStartDate={currentDate}
+              tileClassName={calendarTileClass}
+              onClick={selectedDate}
+            />
+          </div>
 
-        <NextQuestion>Next</NextQuestion>
-      </SectionBlock>
+        </SectionBlock>
 
-      <SectionBlock>
-        <h3 style={{
-          marginTop: 37,
-          borderTop: '1px solid rgb(28,63,144)',
-          paddingTop: 25,
-          textAlign: 'center',
-          color: 'rgb(28,63,144)',
-          fontSize: 24,
-        }}>My Calendar</h3>
+        <SectionBlock>
+          <InnerNavigation style={{
+            marginBottom: '1em',
+          }}>
+            <InnerNavigationItem style={cssInnerNavigationItem}>
+              Events
+            </InnerNavigationItem>
+            <InnerNavigationItem>
+              My Period
+            </InnerNavigationItem>
+          </InnerNavigation>
 
-        <Months>
-          <Month>February</Month>
-          <CurrentMonth>March</CurrentMonth>
-          <Month>April</Month>
-        </Months>
+          {renderNotifications({ id })}
+        </SectionBlock>
 
-        <div style={{
-          margin: '31px auto',
-          width: 370,
-        }}>
-          <MonthView
-            locale="en-US"
-            calendarType="ISO 8601"
-            showNeighboringMonth={false}
-            activeStartDate={currentDate}
-            tileClassName={calendarTileClass}
-            onClick={selectedDate}
-          />
-        </div>
-
-      </SectionBlock>
-
-      <SectionBlock>
-        <InnerNavigation style={{
-          marginBottom: '1em',
-        }}>
-          <InnerNavigationItem style={cssInnerNavigationItem}>
-            Events
-          </InnerNavigationItem>
-          <InnerNavigationItem>
-            My Period
-          </InnerNavigationItem>
-        </InnerNavigation>
-
-        {renderNotifications()}
-      </SectionBlock>
-
-    </Container>
-
-  );
-
+      </Container>
+    );
+  }
 }
 
 Profile.propTypes = {
@@ -543,6 +553,7 @@ Profile.propTypes = {
   gender: PropTypes.string,
   birthday: PropTypes.string,
   avatar: PropTypes.string,
+  setAnswer: PropTypes.func,
   // match: PropTypes.shape({
   //   id: PropTypes.number,
   //   name: PropTypes.string,
@@ -558,4 +569,5 @@ Profile.defaultProps = {
   gender: null,
   birthday: null,
   avatar: null,
+  setAnswer: () => {},
 };

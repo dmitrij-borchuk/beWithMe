@@ -3,19 +3,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import NotificationItem from '../NotificationItem';
 import giftImage from '../../assets/gift@3x.png';
+import headerBgImage from '../../assets/group4@3x.png';
 
 const Container = styled.div`
 `;
 const Header = styled.div`
   font-size: 24px;
   text-align: center;
-  margin: 29px 0 60px 0;
+  padding: 29px 0 60px 0;
   color: rgb(46, 68, 135);
+  background: url(${headerBgImage});
+  background-size: 100%;
+  background-repeat: no-repeat;
 `;
 const Category = styled.div`
   font-size: 23px;
   color: rgb(17, 17, 17);
-  margin-left: 17px;
+  margin: 10px 17px;
 `;
 const NotificationWrapper = styled.div`
   margin-top: 16px;
