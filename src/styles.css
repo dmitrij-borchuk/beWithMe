@@ -5,3 +5,33 @@
 #root {
   background: rgb(250, 250, 250);
 }
+
+.calendar-common-tile {
+  border: none;
+  color: rgb(28,63,144);
+}
+.react-calendar__month-view__days__day--weekend.calendar-common-tile {
+  color: rgb(28,63,144);
+}
+button.react-calendar__tile.calendar-common-tile:enabled:focus,
+button.react-calendar__tile.calendar-common-tile:enabled:hover {
+  background-color: transparent;
+  outline: none;
+}
+button.react-calendar__tile.calendar-common-tile time {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 20px;
+  vertical-align: middle;
+  text-align: center;
+}
+button.react-calendar__tile.calendar-common-tile.calendar-todays-tile time {
+  background-color: #6951cb;
+  color: white;
+}
+button.react-calendar__tile.calendar-common-tile:enabled:focus time {
+  background-color: #07a34f;
+  color: white;
+}
