@@ -44,7 +44,11 @@ const UpcomingEvent = styled.div`
 const SmallSpot = styled.div`
   display: block;
   content: "";
-  background-image: url('https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/F6BBB4F7-0C52-48A4-A608-4B91CB07E97C.png');
+  ${props => (props.id === 2 ? css`
+      background-image: url('https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/F6BBB4F7-0C52-48A4-A608-4B91CB07E97C.png');
+  ` : css`
+    background-image: url('https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/14BCC937-7214-48E6-9F96-153DA39573DC.png');
+  `)}
   width: 75px;
   height: 64px;
   position: absolute;
@@ -54,7 +58,11 @@ const SmallSpot = styled.div`
 const BigSpot = styled.div`
   display: block;
   content: "";
-  background-image: url('https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/5D1B7672-508D-474E-AA6C-370B69E96FF9.png');
+  ${props => (props.id === 2 ? css`
+    background-image: url('https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/5D1B7672-508D-474E-AA6C-370B69E96FF9.png');
+  ` : css`
+    background-image: url('https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/6A29A2CE-2AAC-47F2-8EC8-08E5EC195282.png');
+  `)}
   width: 183px;
   height: 139px;
   position: absolute;
@@ -331,6 +339,9 @@ export default class Profile extends PureComponent {
     };
     const currentQuestion = this.getQuestion();
 
+    if (!id) {
+      return null;
+    }
     return (
       <Container>
 
@@ -342,7 +353,7 @@ export default class Profile extends PureComponent {
               <img src={getImgUrl(gender)} style={{ width: 107 }}/>
             </Avatar>
 
-            <BigSpot></BigSpot>
+            <BigSpot id={id} />
 
           </LeftSide>
 
@@ -365,8 +376,7 @@ export default class Profile extends PureComponent {
               </div>
             </Status>
 
-            <SmallSpot></SmallSpot>
-
+            <SmallSpot id={id} />
           </RightSide>
 
         </Section>

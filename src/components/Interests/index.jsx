@@ -26,6 +26,7 @@ const CategoryText = styled.span`
 const ButtonContainer = styled.div`
   margin: auto;
   width: 240px;
+  margin-top: 24px;
 `;
 
 function getItems(questions) {

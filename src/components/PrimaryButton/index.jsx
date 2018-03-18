@@ -10,6 +10,8 @@ const Container = styled.button`
   border-radius: 22px;
   height: 44px;
   width: 100%;
+  color: rgb(2, 27, 121);
+  font-weight: bold;
 `;
 
 export default function PrimaryButton(props) {
