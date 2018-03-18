@@ -131,11 +131,36 @@ const CurrentMonth = styled.div`
   font-size: 18px;
   font-weight: bold;
 `;
+const Favorites = styled.div``;
+const Favorite = styled.div`
+  padding: 10px 0;
+  border: 1px solid rgb(104,81,201);
+  border-width: 1px 0 1px 0;
+  margin: 10px 0;
+`;
+const FavoriteTitle = styled.div`
+  order: 1;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  display: flex;
+  flex-grow: 1;
+`;
+const FavoriteLastTime = styled.div``;
+const FavoriteLastTimeHint = styled.div`
+  display: flex;
+  margin: 15px 10px;
+`;
+const FavoriteLastTimeAnswer = styled.div`
+  display: flex;
+  margin: 15px 10px;
+`;
 
 const defaultFemaleAvatarUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/34DB5D2E-467B-46AA-A280-5E5182618631.png";
 const defaultMaleAvatarUrl = "https://app.zeplin.io/img/profileStarbucks@192w.png";
 const interestsImgUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/BA55AC51-4395-4EE2-B2ED-026495B6E058.png";
 const foodImageUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/F561200C-6F7F-4C88-9B1D-F037F0E3CAB1.png";
+const calendarIconUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/82F4D0F2-F371-4826-AFA6-311BEC84CC76.png";
 
 const currentDate = new Date();
 
@@ -271,6 +296,139 @@ export default function Profile(props) {
 
       </Section>
 
+      {/* STUFF FOR MY MATE */}
+
+      <SectionBlock>
+        <InnerNavigation>
+          <InnerNavigationItem>
+            Me
+          </InnerNavigationItem>
+          <InnerNavigationItem style={cssInnerNavigationItem}>
+            Alice
+          </InnerNavigationItem>
+        </InnerNavigation>
+
+        <Favorites>
+          <Favorite>
+            <Section style={{ marginTop: 20 }}>
+              <FavoriteTitle>
+                Favorite cousine is:
+              </FavoriteTitle>
+              <Question style={{
+                order: 1,
+                marginBottom: 0,
+                justifyContent: 'center',
+                textAlign: 'center',
+              }}>
+                <QuestionOption>
+                  <img src={foodImageUrl} alt=""/>
+                  <OptionLabel>
+                    Italian
+                  </OptionLabel>
+                </QuestionOption>
+                <QuestionOption>
+                  <img src={foodImageUrl} alt=""/>
+                  <OptionLabel>
+                    Chinese
+                  </OptionLabel>
+                </QuestionOption>
+              </Question>
+            </Section>
+            <FavoriteLastTime>
+              <FavoriteLastTimeHint>
+                <span style={{
+                  flexDirection: 'column',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexGrow: 1,
+                }}>
+                  When did you last take Alice to eat some italian cuisine?
+                </span>
+                <img src={calendarIconUrl} alt="" style={{
+                  order: 1,
+                }}/>
+              </FavoriteLastTimeHint>
+              <FavoriteLastTimeAnswer>
+                <span style={{
+                  flexDirection: 'column',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexGrow: 1,
+                }}>
+                  How often you usually do this?
+                </span>
+                <select style={{
+                  order: 1,
+                }}>
+                  <option value="weekly">Every week</option>
+                </select>
+              </FavoriteLastTimeAnswer>
+            </FavoriteLastTime>
+          </Favorite>
+
+          <Favorite>
+            <Section style={{ marginTop: 20 }}>
+              <FavoriteTitle>
+                Favorite cousine is:
+              </FavoriteTitle>
+              <Question style={{
+                order: 1,
+                marginBottom: 0,
+                justifyContent: 'center',
+                textAlign: 'center',
+              }}>
+                <QuestionOption>
+                  <img src={foodImageUrl} alt=""/>
+                  <OptionLabel>
+                    Italian
+                  </OptionLabel>
+                </QuestionOption>
+                <QuestionOption>
+                  <img src={foodImageUrl} alt=""/>
+                  <OptionLabel>
+                    Chinese
+                  </OptionLabel>
+                </QuestionOption>
+              </Question>
+            </Section>
+            <FavoriteLastTime>
+              <FavoriteLastTimeHint>
+                <span style={{
+                  flexDirection: 'column',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexGrow: 1,
+                }}>
+                  When did you last take Alice to eat some italian cuisine?
+                </span>
+                <img src={calendarIconUrl} alt="" style={{
+                  order: 1,
+                }}/>
+              </FavoriteLastTimeHint>
+              <FavoriteLastTimeAnswer>
+                <span style={{
+                  flexDirection: 'column',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexGrow: 1,
+                }}>
+                  How often you usually do this?
+                </span>
+                <select style={{
+                  order: 1,
+                }}>
+                  <option value="weekly">Every week</option>
+                </select>
+              </FavoriteLastTimeAnswer>
+            </FavoriteLastTime>
+          </Favorite>
+
+        </Favorites>
+
+      </SectionBlock>
+
+      {/* MY STUFF */}
+
       <Section>
         <InnerNavigation>
           <InnerNavigationItem style={cssInnerNavigationItem}>
@@ -338,7 +496,7 @@ export default function Profile(props) {
 
         <Months>
           <Month>February</Month>
-          <CurrentMonth>February</CurrentMonth>
+          <CurrentMonth>March</CurrentMonth>
           <Month>April</Month>
         </Months>
 
@@ -359,6 +517,17 @@ export default function Profile(props) {
       </SectionBlock>
 
       <SectionBlock>
+        <InnerNavigation style={{
+          marginBottom: '1em',
+        }}>
+          <InnerNavigationItem style={cssInnerNavigationItem}>
+            Events
+          </InnerNavigationItem>
+          <InnerNavigationItem>
+            My Period
+          </InnerNavigationItem>
+        </InnerNavigation>
+
         {renderNotifications()}
       </SectionBlock>
 
