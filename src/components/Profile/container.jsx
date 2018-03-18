@@ -19,7 +19,7 @@ export class ProfileContainer extends PureComponent {
       getProfile,
       getNotifications,
     } = this.props;
-    let profileId = parseInt(this.props.match.params.id);
+    let profileId = parseInt(this.props.match.params.id, 10);
     getNotifications(profileId);
     getProfile(profileId);
   }
@@ -41,7 +41,7 @@ const mapStateToProps = ({ profile }) => ({
 });
 const mapDispatchToProps = dispatch => ({
   getProfile: id => dispatch(getProfileAction(id)),
-  getNotifications: id => dispatch(getNotificationListAction())
+  getNotifications: id => dispatch(getNotificationListAction(id))
 });
 
 export default connect(

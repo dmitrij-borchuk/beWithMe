@@ -1,32 +1,20 @@
-import { SET_QUESTIONS_LIST } from '../actions/questions';
+import { SET_NOTIFICATIONS_LIST } from '../actions/notifications';
 
+const parseData = data => ({
+  isDone: data.done,
+  text: data.notifications_text,
+  date: data.start_date,
+});
 const defaultState = {
-  list: [{
-    date: Date.now(),
-    text: 'It’s time to take Alice some Italian cousine',
-    id: 1,
-    isDone: false,
-    url: 'http://via.placeholder.com/150x150',
-    type: 'Notifier',
-  }, {
-    date: Date.now() + 864000000,
-    text: 'Some notification',
-    id: 2,
-    isDone: true,
-  }, {
-    date: Date.now() + (864000000 * 2),
-    text: 'Some notification',
-    id: 3,
-    isDone: false,
-  }],
+  list: [],
 };
 
 export default function (state = defaultState, action) {
   switch (action.type) {
-    case SET_QUESTIONS_LIST:
+    case SET_NOTIFICATIONS_LIST:
       return {
         ...state,
-        list: action.payload,
+        list: action.payload.map(parseData),
       };
     default:
       return state;

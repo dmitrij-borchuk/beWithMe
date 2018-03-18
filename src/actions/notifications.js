@@ -8,14 +8,15 @@ export const setNotificationList = list => ({
 
 export const NOTIFICATIONS_LIST_FETCHING_ERROR = 'NOTIFICATIONS_LIST_FETCHING_ERROR';
 export const NOTIFICATIONS_LIST_FETCHING = 'NOTIFICATIONS_LIST_FETCHING';
-export function getNotificationList() {
+export function getNotificationList(id) {
   return async (dispatch) => {
     dispatch({
       type: NOTIFICATIONS_LIST_FETCHING,
     });
 
     try {
-      return dispatch(setNotificationList(await get()));
+      const response = await get(id);
+      return dispatch(setNotificationList(response.body));
     } catch (error) {
       return dispatch({
         type: NOTIFICATIONS_LIST_FETCHING_ERROR,

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Drawer from 'react-motion-drawer';
 import Menu from '../Icon/menu';
+import { getTitleByUrl } from '../../utils';
 
 const Container = styled.div`
 `;
@@ -26,11 +27,11 @@ const PageTitle = styled.div`
 const NavLinkStyle = {
   display: 'block',
   padding: 9,
-}
+};
 const DrawerStyle = {
   background: '#fff',
   paddingTop: 36,
-}
+};
 
 export default function Header(props) {
   const {
@@ -44,7 +45,7 @@ export default function Header(props) {
       <Bar onClick={showDrawer}>
         <Menu />
         <PageTitle>
-          Page Title
+          {getTitleByUrl(window.location.pathname)}
         </PageTitle>
       </Bar>
       <Drawer
@@ -56,7 +57,7 @@ export default function Header(props) {
           Be With Me!
         </PageTitle>
         <Link
-          to="/notifications"
+          to="/notifications/1"
           onClick={closeDrawer}
           style={NavLinkStyle}
         >

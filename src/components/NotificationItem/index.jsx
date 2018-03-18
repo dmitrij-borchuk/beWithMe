@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { css } from 'styled-components';
 import Check from '../Icon/check';
 
 const size = '78px';
@@ -11,6 +12,9 @@ function getMonthString(date) {
 const Container = styled.div`
   overflow: hidden;
   height: ${size};
+  position: relative;
+`;
+const ContainerCompact = styled.div`
   position: relative;
 `;
 const ContentWrapper = styled.div`
@@ -38,10 +42,28 @@ const DateContainer = styled.div`
   border-left: 2px solid blue;
   padding: 6px 0;
 `;
-const Text = styled.div`
+const DateContainerCompact = styled.div`
+  border-left: 4px solid rgb(104,81,201);
+  width: 65px;
+`;
+const textCss = css`
   width: 100%;
-  margin: 12px 0;
   font-size: 13px;
+`;
+const Text = styled.div`
+  ${textCss}
+  margin: 12px 0;
+`;
+const TextCompact = styled.div`
+  ${textCss}
+  margin: 8px 0 0 7px;
+  color: rgb(104,81,201);
+`;
+const DaysLeft = styled.div`
+`;
+const DescriptionCompact = styled.div`
+  margin: 2px 0 0 7px;
+  font-size: 12px;
 `;
 const TextWrapper = styled.div`
   width: 100%;
@@ -63,12 +85,27 @@ const Month = styled.div`
   font-size: 12px;
   color: rgb(128, 146, 188);
 `;
-const Day = styled.div`
+const MonthCompact = styled.div`
   text-align: center;
-  font-size: 35px;
+  font-size: 12px;
+  line-height: 1em;
+  margin-top: -2px;
+`;
+const dayCss = css`
+  text-align: center;
   color: rgb(104, 81, 201);
   font-weight: bold;
   font-family: Nunito;
+`;
+const Day = styled.div`
+  ${dayCss}
+  font-size: 35px;
+`;
+const DayCompact = styled.div`
+  ${dayCss}
+  font-size: 32px;
+  line-height: 1em;
+  margin-top: 2px;
 `;
 const Type = styled.div`
   font-size: 12px;
@@ -102,23 +139,46 @@ export default class NotificationItem extends PureComponent {
     });
   }
 
-  render() {
-    const {
-      date,
-      text,
-      onDoneClick,
-      isDone,
-      type,
-      url,
-    } = this.props;
-    const {
-      opened,
-    } = this.state;
-    const d = new Date(date);
-    const day = d.getDate();
-    const year = d.getFullYear();
-    const month = getMonthString(d);
+  renderCompact({ date, text, onDoneClick, isDone, type, url, compact, opened, day, description, year, month }) {
+    return (
+      <ContainerCompact>
+        <ContentWrapper
+          onClick={() => this.onItemClick()}
+          opened={opened}
+          style={{
+            border: 'none',
+            marginBottom: 8,
+          }}
+        >
+          <DateContainerCompact>
+            <DayCompact>
+              {day}
+            </DayCompact>
+            <MonthCompact>
+              {month}
+            </MonthCompact>
+          </DateContainerCompact>
+          <TextWrapper>
+            <TextCompact>
+              {text}
+            </TextCompact>
+            <DescriptionCompact>
+              {description}
+            </DescriptionCompact>
+          </TextWrapper>
+        </ContentWrapper>
 
+        <DoneButton
+          isDone={isDone}
+          onClick={() => !isDone && onDoneClick()}
+        >
+          {isDone ? <Check /> : 'Done'}
+        </DoneButton>
+      </ContainerCompact>
+    );
+  }
+
+  renderBig({ date, text, onDoneClick, isDone, type, url, compact, opened, day, description, year, month }) {
     return (
       <Container>
         <ContentWrapper
@@ -158,21 +218,61 @@ export default class NotificationItem extends PureComponent {
           {isDone ? <Check /> : 'Done'}
         </DoneButton>
       </Container>
-    );
+    )
+  }
+
+  render() {
+    const {
+      date,
+      text,
+      onDoneClick,
+      isDone,
+      type,
+      url,
+      compact,
+    } = this.props;
+    const {
+      opened,
+    } = this.state;
+    const d = new Date(date);
+    const day = d.getDate();
+    const year = d.getFullYear();
+    const month = getMonthString(d);
+
+    const description = "N days left";
+
+    const opts = {
+      date,
+      text,
+      onDoneClick,
+      isDone,
+      type,
+      url,
+      compact,
+      opened,
+      day,
+      description,
+      year,
+      month,
+    };
+
+    return compact ? this.renderCompact(opts) : this.renderBig(opts);
   }
 }
 
 NotificationItem.propTypes = {
-  date: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   onDoneClick: PropTypes.func.isRequired,
   isDone: PropTypes.bool,
   url: PropTypes.string,
   type: PropTypes.string,
+  compact: PropTypes.bool,
 };
 
 NotificationItem.defaultProps = {
   isDone: false,
   url: null,
   type: null,
+  compact: false,
 };

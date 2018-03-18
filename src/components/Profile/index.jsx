@@ -1,23 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { css } from 'styled-components';
 import { MonthView } from 'react-calendar';
+import NotificationItem from '../NotificationItem';
 
 const Container = styled.div`
 `;
 const Section = styled.div`
   display: flex;
 `;
+const SectionBlock = styled.div`
+  display: block;
+`;
 const LeftSide = styled.div`
   order: 1;
   flex-grow: 1;
-  width: 138px;
+  min-width: 158px;
+  max-width: 158px;
   position: relative;
 `;
 const RightSide = styled.div`
   order: 1;
   flex-grow: 2;
-  padding-left: 20px;
 `;
 const Avatar = styled.div`
   padding: 5px 23px;
@@ -31,6 +36,7 @@ const Name = styled.div`
   text-align: center;
   font-size: 19px;
   padding-bottom: 6px;
+  font-weight: bold;
 `;
 const Reminder = styled.div`
 `;
@@ -43,7 +49,7 @@ const SmallSpot = styled.div`
   width: 75px;
   height: 64px;
   position: absolute;
-  right: -19px;
+  right: 0;
   top: 0;
 `;
 const BigSpot = styled.div`
@@ -57,11 +63,99 @@ const BigSpot = styled.div`
   top: 79px;
 `;
 
+const InnerNavigation = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 8px;
+`;
+const InnerNavigationItem = styled.div`
+  order: 1;
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px;
+  text-transform: uppercase;
+  border-bottom: 3px solid transparent;
+`;
+const cssInnerNavigationItem = {
+  borderColor: 'rgb(104,81,201)',
+};
+
+const Question = styled.div`
+  display: flex;
+  overflow: auto;
+  position: relative;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  margin-bottom: 29px;
+`;
+const QuestionOption = styled.div`
+  order: 1;
+  min-width: 85px;
+  text-align: center;
+`;
+const OptionLabel = styled.div`
+  font-size: 12px;
+  margin-top: 2px;
+`;
+const NextQuestion = styled.button`
+  background-color: rgb(28, 63, 144);
+  color: white;
+  border: none;
+  padding: 13px;
+  min-width: 230px;
+  display: block;
+  margin: auto;
+  font-size: 16px;
+  border-radius: 21px;
+`;
+
+const Months = styled.div`
+  display: flex;
+  margin: auto;
+  width: 225px;
+`;
+const cssMonth = css`
+  text-align: center;
+  width: 33%;
+  flex-grow: 1;
+  vertical-align: middle;
+  line-height: 20px;
+`;
+const Month = styled.div`
+  ${cssMonth}
+  font-size: 12px;
+`;
+const CurrentMonth = styled.div`
+  ${cssMonth}
+  color: orange;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
 const defaultFemaleAvatarUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/34DB5D2E-467B-46AA-A280-5E5182618631.png";
 const defaultMaleAvatarUrl = "https://app.zeplin.io/img/profileStarbucks@192w.png";
 const interestsImgUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/BA55AC51-4395-4EE2-B2ED-026495B6E058.png";
+const foodImageUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/F561200C-6F7F-4C88-9B1D-F037F0E3CAB1.png";
 
-const currentDate = new Date()
+const currentDate = new Date();
+
+const NotificationWrapper = styled.div``;
+const notifications = [
+  {
+    id: 1,
+    date: (new Date()).toString(),
+    text: "Mother's birthday",
+    type: "Type?",
+    isDone: false,
+  },
+  {
+    id: 2,
+    date: (new Date()).toString(),
+    text: "2 Years Anniversary",
+    type: "Type?",
+    isDone: false,
+  }
+]
 
 function getImgUrl(gender) {
   return gender === "male" ? defaultMaleAvatarUrl : defaultFemaleAvatarUrl
@@ -69,6 +163,43 @@ function getImgUrl(gender) {
 
 function getMateImgUrl(gender) {
   return gender === "male" ? defaultFemaleAvatarUrl : defaultMaleAvatarUrl
+}
+
+function renderNotifications({compact} = {}) {
+  return (
+    <div>
+      {notifications.map(notification => (
+        <NotificationWrapper key={notification.id} style={{
+          marginLeft: compact ? 33 : 0,
+          marginBottom: compact ? 0 : 10,
+        }}>
+          <NotificationItem
+            date={notification.date}
+            text={notification.text}
+            onDoneClick={() => setNotificationAsDone(notification.id)}
+            isDone={notification.isDone}
+            url={notification.url}
+            compact={compact}
+          />
+        </NotificationWrapper>
+      ))}
+    </div>
+  )
+}
+
+function calendarTileClass({date, view}) {
+  let re = ['calendar-common-tile']
+  let day = date.getDate();
+  let currentDay = currentDate.getDate();
+  if (day === currentDay) {
+    re.push('calendar-todays-tile')
+  }
+  return re
+}
+
+function selectedDate(date, view) {
+  // has problem by fixing selected date...
+  console.log(date)
 }
 
 export default function Profile(props) {
@@ -80,8 +211,6 @@ export default function Profile(props) {
     birthday,
     avatar,
   } = props;
-
-  console.log(props)
 
   return (
     <Container>
@@ -122,6 +251,7 @@ export default function Profile(props) {
         </RightSide>
 
       </Section>
+      
       <Section>
 
         <LeftSide style={{ zIndex: 1 }}>
@@ -133,84 +263,109 @@ export default function Profile(props) {
           </Avatar>
         </LeftSide>
 
-        <RightSide>
-          <Reminder>
-            <b>My mother birthday</b>
-            <span>10 days left</span>
-          </Reminder>
-          <Reminder>
-            <b>100 days together</b>
-            <span>10 days left</span>
-          </Reminder>
+        <RightSide style={{
+          marginTop: -7,
+        }}>
+          {renderNotifications({compact: true})}
         </RightSide>
 
       </Section>
 
+      <Section>
+        <InnerNavigation>
+          <InnerNavigationItem style={cssInnerNavigationItem}>
+            Me
+          </InnerNavigationItem>
+          <InnerNavigationItem>
+            Alice
+          </InnerNavigationItem>
+        </InnerNavigation>
+      </Section>
 
-
-      <hr/>
-
-      <h3>
-        Questions?
-      </h3>
-
-        <ul>
-          <li>Me</li>
-          <li>Alice</li>
-        </ul>
-
-        <h4>
+      <SectionBlock>
+        <h4 style={{
+          padding: '0 16px',
+          margin: '21px 0 17px 0',
+        }}>
           What is your fav cousine?
         </h4>
 
-        <ul>
-          <li>Italian</li>
-          <li>Chinese</li>
-          <li>French</li>
-          <li>Greek</li>
-          <li>Indonesian</li>
-        </ul>
+        <Question>
+          <QuestionOption>
+            <img src={foodImageUrl} alt=""/>
+            <OptionLabel>
+              Italian
+            </OptionLabel>
+          </QuestionOption>
+          <QuestionOption>
+            <img src={foodImageUrl} alt=""/>
+            <OptionLabel>
+              Chinese
+            </OptionLabel>
+          </QuestionOption>
+          <QuestionOption>
+            <img src={foodImageUrl} alt=""/>
+            <OptionLabel>
+              French
+            </OptionLabel>
+          </QuestionOption>
+          <QuestionOption>
+            <img src={foodImageUrl} alt=""/>
+            <OptionLabel>
+              Greek
+            </OptionLabel>
+          </QuestionOption>
+          <QuestionOption>
+            <img src={foodImageUrl} alt=""/>
+            <OptionLabel>
+              Indonesian
+            </OptionLabel>
+          </QuestionOption>
+        </Question>
 
-        <button>Next</button>
+        <NextQuestion>Next</NextQuestion>
+      </SectionBlock>
 
-      <hr/>
+      <SectionBlock>
+        <h3 style={{
+          marginTop: 37,
+          borderTop: '1px solid rgb(28,63,144)',
+          paddingTop: 25,
+          textAlign: 'center',
+          color: 'rgb(28,63,144)',
+          fontSize: 24,
+        }}>My Calendar</h3>
 
-      <h3>My Calendar</h3>
+        <Months>
+          <Month>February</Month>
+          <CurrentMonth>February</CurrentMonth>
+          <Month>April</Month>
+        </Months>
 
-      <ul>
-        <li>February</li>
-        <li>March</li>
-        <li>April</li>
-      </ul>
+        <div style={{
+          margin: '31px auto',
+          width: 370,
+        }}>
+          <MonthView
+            locale="en-US"
+            calendarType="ISO 8601"
+            showNeighboringMonth={false}
+            activeStartDate={currentDate}
+            tileClassName={calendarTileClass}
+            onClick={selectedDate}
+          />
+        </div>
 
-      <MonthView
-        locale="en-US"
-        calendarType="ISO 8601"
-        showNeighboringMonth={false}
-        activeStartDate={currentDate}
-      />
+      </SectionBlock>
 
-      <hr/>
-
-      <UpcomingEvent>
-        22
-        <b>Meeting with friends</b>
-        Part-time, 12 week course where you will understand users 
-        problems through lorem ipsum sit amet
-      </UpcomingEvent>
-
-      <UpcomingEvent>
-        30
-        <b>Web &amp; Mobile App Design</b>
-        Part-time, 12 week course where you will understand users 
-        problems through lorem ipsum sit amet
-      </UpcomingEvent>
-
-      
+      <SectionBlock>
+        {renderNotifications()}
+      </SectionBlock>
 
     </Container>
 
   );
+
 }
 
 Profile.propTypes = {
