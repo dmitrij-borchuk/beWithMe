@@ -8,6 +8,7 @@ function parseData(data) {
     text: data.question_text,
     id: data.question_id,
     options: data.f_options_list,
+    answers: data.f_options,
   };
 }
 function parseLikes(data) {

@@ -10,6 +10,7 @@ import Profile from '../Profile/container';
 // import webmanifest from '../../assets/favicon/site.webmanifest';
 // import safariPinnedTab from '../../assets/favicon/safari-pinned-tab.svg';
 import Header from '../Header/container';
+import Interests from '../Interests/container';
 import manifest from '../../manifest.webmanifest';
 import icon from '../../Asset 1@2x-8.png';
 
@@ -41,6 +42,7 @@ export default function App() {
           <AppContent>
             <Route path="/notifications/:id" component={Notifications} />
             <Route path="/profile/:id" component={Profile} />
+            <Route path="/interests/:id" component={Interests} />
           </AppContent>
         </div>
       </Router>

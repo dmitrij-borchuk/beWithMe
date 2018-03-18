@@ -2,19 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import NotificationItem from '../NotificationItem';
+import HeroWithText from '../HeroWithText';
 import giftImage from '../../assets/gift@3x.png';
-import headerBgImage from '../../assets/group4@3x.png';
 
 const Container = styled.div`
-`;
-const Header = styled.div`
-  font-size: 24px;
-  text-align: center;
-  padding: 29px 0 60px 0;
-  color: rgb(46, 68, 135);
-  background: url(${headerBgImage});
-  background-size: 100%;
-  background-repeat: no-repeat;
 `;
 const Category = styled.div`
   font-size: 23px;
@@ -41,9 +32,7 @@ export default function Notifications(props) {
 
   return (
     <Container>
-      <Header>
-        How to make Alice happy?
-      </Header>
+      <HeroWithText text="How to make Alice happy?" />
       <Category>
         <GiftImage src={giftImage} />
         <CategoryText>

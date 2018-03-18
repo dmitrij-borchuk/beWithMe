@@ -154,6 +154,12 @@ const FavoriteLastTimeAnswer = styled.div`
   display: flex;
   margin: 15px 10px;
 `;
+const Accordion = styled.div`
+  ${props => !props.open && css`
+    height: 0;
+  `}
+  overflow: hidden;
+`;
 
 const defaultFemaleAvatarUrl = "https://cdn.zeplin.io/5aad172d341ce7da48d8604a/assets/34DB5D2E-467B-46AA-A280-5E5182618631.png";
 const defaultMaleAvatarUrl = "https://app.zeplin.io/img/profileStarbucks@192w.png";
@@ -176,7 +182,7 @@ const notifications = [
   {
     id: 2,
     date: (new Date(Date.now() + (8 * oneDayInMs))).toString(),
-    text: '2 Years Anniversary',
+    text: 'Italian restaurant',
     type: 'Type?',
     isDone: false,
   },
@@ -190,7 +196,7 @@ const notifications = [
   {
     id: 4,
     date: (new Date(Date.now() + (8 * oneDayInMs))).toString(),
-    text: '2 Years Anniversary',
+    text: 'Italian restaurant',
     type: 'Type?',
     isDone: false,
   },
@@ -230,14 +236,14 @@ function renderNotifications({ compact, id } = {}) {
   )
 }
 
-function calendarTileClass({date, view}) {
-  let re = ['calendar-common-tile']
-  let day = date.getDate();
-  let currentDay = currentDate.getDate();
+function calendarTileClass({ date, view }) {
+  const re = ['calendar-common-tile'];
+  const day = date.getDate();
+  const currentDay = currentDate.getDate();
   if (day === currentDay) {
-    re.push('calendar-todays-tile')
+    re.push('calendar-todays-tile');
   }
-  return re
+  return re;
 }
 
 function selectedDate(date, view) {
@@ -251,6 +257,7 @@ export default class Profile extends PureComponent {
     this.state = {
       activeTab: 'ME',
       currentQuestionIndex: 0,
+      openedCalendarIndex: null,
     };
   }
 
@@ -298,6 +305,13 @@ export default class Profile extends PureComponent {
     });
   }
 
+  openCalendar(index) {
+    this.setState({
+      openedCalendarIndex: index,
+    });
+
+  }
+
   render() {
     const {
       id,
@@ -309,6 +323,7 @@ export default class Profile extends PureComponent {
     } = this.props;
     const {
       activeTab,
+      openedCalendarIndex,
     } = this.state;
     const mateNamesMap = {
       1: 'Bob',
@@ -418,7 +433,7 @@ export default class Profile extends PureComponent {
                   ))}
                 </Question>
 
-                <NextQuestion>Next</NextQuestion>
+                <NextQuestion>More</NextQuestion>
               </SectionBlock>
 
             )}
@@ -429,7 +444,7 @@ export default class Profile extends PureComponent {
         {activeTab === 'MATE' &&
           <SectionBlock>
             <Favorites>
-              {partnersLikes.map(like => (
+              {partnersLikes.map((like, index) => (
                 <Favorite key={like.favoriteItemId}>
                   {/* <Section style={{ marginTop: 20 }}>
                     <FavoriteTitle>
@@ -469,10 +484,27 @@ export default class Profile extends PureComponent {
                       >
                         {like.lastQuestion}
                       </span>
-                      <img src={calendarIconUrl} alt="" style={{
-                        order: 1,
-                      }}/>
+                      <div
+                        onClick={() => (like.openCalendar = !like.openCalendar)}
+                      >
+                        <img
+                          src={calendarIconUrl} alt="" style={{
+                            order: 1,
+                          }}
+                        />
+                      </div>
                     </FavoriteLastTimeHint>
+
+                    <Accordion open={openedCalendarIndex === index}>
+                      <MonthView
+                        locale="en-US"
+                        calendarType="ISO 8601"
+                        showNeighboringMonth={false}
+                        activeStartDate={currentDate}
+                        tileClassName={calendarTileClass}
+                        onClick={selectedDate}
+                      />
+                    </Accordion>
                     <FavoriteLastTimeAnswer>
                       <span style={{
                         flexDirection: 'column',
@@ -486,6 +518,8 @@ export default class Profile extends PureComponent {
                         order: 1,
                       }}>
                         <option value="weekly">Every week</option>
+                        <option value="weekly">Every two weeks</option>
+                        <option value="weekly">Every month</option>
                       </select>
                     </FavoriteLastTimeAnswer>
                   </FavoriteLastTime>
@@ -495,6 +529,7 @@ export default class Profile extends PureComponent {
           </SectionBlock>
         }
 
+        {/* Calendar */}
         <SectionBlock>
           <h3 style={{
             marginTop: 37,

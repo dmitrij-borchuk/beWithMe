@@ -57,13 +57,6 @@ export default function Header(props) {
           Be With Me!
         </PageTitle>
         <Link
-          to="/notifications/1"
-          onClick={closeDrawer}
-          style={NavLinkStyle}
-        >
-          Notifications
-        </Link>
-        <Link
           to="/profile/1"
           onClick={closeDrawer}
           style={NavLinkStyle}
@@ -76,6 +69,20 @@ export default function Header(props) {
           style={NavLinkStyle}
         >
           Mate Profile
+        </Link>
+        <Link
+          to="/notifications/2"
+          onClick={closeDrawer}
+          style={NavLinkStyle}
+        >
+          Notifications
+        </Link>
+        <Link
+          to="/interests/1"
+          onClick={closeDrawer}
+          style={NavLinkStyle}
+        >
+          Interests
         </Link>
       </Drawer>
     </Container>
