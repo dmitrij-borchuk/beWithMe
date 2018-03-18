@@ -3,21 +3,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Component from './index';
 import { getProfile as getProfileAction } from '../../actions/profile';
+import { getNotificationList as getNotificationListAction } from '../../actions/notifications';
 
 export class ProfileContainer extends PureComponent {
   componentDidMount() {
-    const {
-      getProfile,
-    } = this.props;
-
-    getProfile(parseInt(this.props.match.params.id));
+    this.prepData()
   }
 
   componentDidUpdate() {
+    this.prepData()
+  }
+
+  prepData() {
     const {
       getProfile,
+      getNotifications,
     } = this.props;
-    getProfile(parseInt(this.props.match.params.id));
+    let profileId = parseInt(this.props.match.params.id);
+    getNotifications(profileId);
+    getProfile(profileId);
   }
 
   render() {
@@ -37,6 +41,7 @@ const mapStateToProps = ({ profile }) => ({
 });
 const mapDispatchToProps = dispatch => ({
   getProfile: id => dispatch(getProfileAction(id)),
+  getNotifications: id => dispatch(getNotificationListAction())
 });
 
 export default connect(
