@@ -2,22 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import NotificationItem from '../NotificationItem';
+import giftImage from '../../assets/gift@3x.png';
 
 const Container = styled.div`
 `;
 const Header = styled.div`
-  font-size: 32px;
+  font-size: 24px;
   text-align: center;
   margin: 29px 0 60px 0;
   color: rgb(46, 68, 135);
 `;
-const GiftButton = styled.div`
+const Category = styled.div`
   font-size: 23px;
   color: rgb(17, 17, 17);
   margin-left: 17px;
 `;
 const NotificationWrapper = styled.div`
   margin-top: 16px;
+`;
+const GiftImage = styled.img`
+  width: 30px;
+  vertical-align: text-top;
+`;
+const CategoryText = styled.span`
+  font-weight: bold;
+  margin-left: 11px;
 `;
 
 export default function Notifications(props) {
@@ -31,9 +40,12 @@ export default function Notifications(props) {
       <Header>
         How to make Alice happy?
       </Header>
-      <GiftButton>
-        Gifts
-      </GiftButton>
+      <Category>
+        <GiftImage src={giftImage} />
+        <CategoryText>
+          Gifts
+        </CategoryText>
+      </Category>
       {notifications.map(notification => (
         <NotificationWrapper key={notification.id}>
           <NotificationItem

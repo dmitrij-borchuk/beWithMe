@@ -9,7 +9,6 @@ function getMonthString(date) {
 }
 
 const Container = styled.div`
-  overflow: hidden;
   height: ${size};
   position: relative;
 `;
@@ -24,6 +23,7 @@ const ContentWrapper = styled.div`
   background: #fff;
   z-index: 1;
   position: relative;
+  box-shadow: 0px 0px 20px #ccc;
   ${props => props.opened && `
     transform: translateX(-${size});
   `}

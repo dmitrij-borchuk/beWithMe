@@ -1,3 +1,7 @@
-:global #root, :global body, :global html {
+#root, body, html {
   height: 100%;
+}
+
+#root {
+  background: rgb(250, 250, 250);
 }
